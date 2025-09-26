@@ -1,0 +1,69 @@
+service: cloudsec360-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:Query"
+            - "dynamodb:Scan"
+            - "dynamodb:GetItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:UpdateItem"
+          Resource: "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/CloudSec360-Tenants"
+        - Effect: "Allow"
+          Action:
+            - "sqs:SendMessage"
+          Resource: "arn:aws:sqs:${aws:region}:${aws:accountId}:CloudSec360-AuditQueue"
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+package:
+  individually: true
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+    sourcemap: true
+
+functions:
+  getSecurityScore:
+    handler: src/handlers/getScore.handler
+    events:
+      - httpApi:
+          path: /score/{tenantId}
+          method: get
+  
+  runComplianceAudit:
+    handler: src/handlers/runAudit.handler
+    events:
+      - httpApi:
+          path: /audit/{tenantId}
+          method: post
+
+resources:
+  Resources:
+    TenantsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CloudSec360-Tenants
+        AttributeDefinitions:
+          - AttributeName: tenantId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: tenantId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    AuditQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: CloudSec360-AuditQueue
+

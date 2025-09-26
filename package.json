@@ -1,0 +1,21 @@
+{
+  "name": "cloudsec360-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Dário Newton (via Manus AI)",
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "build:frontend": "npm run build --workspace=apps/frontend",
+    "deploy:backend": "npm run deploy --workspace=apps/backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  }
+}
+

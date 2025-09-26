@@ -1,0 +1,15 @@
+{
+  "name": "@cloudsec360/ui",
+  "version": "1.0.0",
+  "main": "./index.jsx",
+  "types": "./index.jsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "eslint": "^8.57.0",
+    "react": "^18.2.0"
+  }
+}
