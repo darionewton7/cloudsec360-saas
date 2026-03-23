@@ -1,7 +1,7 @@
 '''
 # CloudSec360 - Plataforma de Segurança e Compliance Multi-Cloud
 
-**Autor Principal:** Dário Newton (Desenvolvido por Manus AI)
+**Autor Principal:** Dário Newton 
 
 [![CI/CD](https://github.com/manus-ai/cloudsec360-example/actions/workflows/deploy-backend.yml/badge.svg)](https://github.com/manus-ai/cloudsec360-example/actions)
 
